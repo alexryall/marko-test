@@ -67,6 +67,16 @@ bin/
 
 OpenSwoole serves static files from `public/` directly via `enable_static_handler` — no need for PHP to handle CSS/JS/images.
 
+### Session Handling in Swoole
+
+PHP's native session system doesn't work correctly in a persistent process — singletons retain state, `session_write_close()` doesn't fully reset, and `header()` doesn't reach clients. `SwooleServer` handles this by:
+
+1. Setting `$_COOKIE`, `$_SERVER`, `$_SESSION` per-request from the Swoole request
+2. Calling `session_destroy()` between requests (unlike `session_write_close()`, this fully resets PHP's session state in OpenSwoole)
+3. Resetting the `Session` singleton's internal state (`started`, `id`, `data`) via Reflection
+4. Setting `Session::$id` from the incoming cookie so `Session::start()` resumes the correct session
+5. Manually sending the `Set-Cookie` header via `$swooleResponse->cookie()` (PHP's `header()` is invisible to Swoole)
+
 ### Key Difference from PHP Built-in Server
 
 The PHP built-in server (`php -S`) re-executes `public/index.php` on every request, meaning `Application::boot()` runs each time. With OpenSwoole, the application boots once and stays in memory — route discovery, module loading, container setup, and database connections are all reused across requests.

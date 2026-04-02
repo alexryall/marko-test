@@ -74,7 +74,7 @@ app/shop/
 | POST   | `/cart/remove`          | CartController          | Remove item (returns JSON)      |
 | GET    | `/checkout`             | CheckoutController      | Checkout form (redirects if empty) |
 | POST   | `/checkout/place-order` | CheckoutController      | Creates order, redirects        |
-| GET    | `/order/{id}`           | OrderController         | Order confirmation page         |
+| GET    | `/order/{reference}`    | OrderController         | Order confirmation (session-verified) |
 
 ### Database Schema
 
@@ -108,7 +108,8 @@ The mini cart is a slide-out drawer rendered in `base.latte` with vanilla JS (fe
 2. Form collects: email, first name, last name, shipping method (standard free / express $25)
 3. Tax calculated at 8.5%
 4. "Free payment method" (no real payment processing)
-5. Creates Order + OrderItems, clears cart, redirects to `/order/{id}`
+5. Creates Order + OrderItems, stores reference in session, clears cart, redirects to `/order/{reference}`
+6. Order confirmation page verifies the reference belongs to the current session (prevents IDOR)
 
 ### Configuration Files
 
