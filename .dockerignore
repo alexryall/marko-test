@@ -1,0 +1,10 @@
+.git
+.github
+.claude
+.marko
+.env
+.idea
+.DS_Store
+vendor
+storage
+stitch
