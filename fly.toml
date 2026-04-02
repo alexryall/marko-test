@@ -1,4 +1,9 @@
-app = 'marko-shop'
+# fly.toml app configuration file generated for marko-test on 2026-04-02T08:29:52Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'marko-test'
 primary_region = 'iad'
 
 [build]
@@ -9,11 +14,10 @@ primary_region = 'iad'
   auto_stop_machines = 'stop'
   auto_start_machines = true
   min_machines_running = 0
+  processes = ['app']
 
 [[vm]]
-  memory = '256mb'
+  memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
-
-[deploy]
-  release_command = 'php bin/setup-db.php'
+  memory_mb = 256
