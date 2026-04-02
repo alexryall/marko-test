@@ -15,7 +15,6 @@
         "marko/session-file": "^0.1.0"
     },
     "require-dev": {
-        "marko/dev-server": "*",
         "pestphp/pest": "^4.0"
     },
     "config": {
