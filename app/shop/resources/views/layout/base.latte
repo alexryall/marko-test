@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>{block title}Marko Shop | The Digital Atelier{/block}</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                "primary": "#4f6073",
+                "primary-container": "#d2e4fb",
+                "surface-container-high": "#e3e9ec",
+                "surface-container": "#eaeff1",
+                "primary-dim": "#435467",
+                "background": "#f8f9fa",
+                "surface-variant": "#dbe4e7",
+                "outline-variant": "#abb3b7",
+                "secondary": "#49636f",
+                "secondary-container": "#cbe7f5",
+                "surface-container-low": "#f1f4f6",
+                "on-surface": "#2b3437",
+                "on-background": "#2b3437",
+                "on-primary-container": "#425366",
+                "surface-container-lowest": "#ffffff",
+                "on-secondary-container": "#3c5561",
+                "on-surface-variant": "#586064",
+                "on-primary": "#f5f8ff",
+                "outline": "#737c7f",
+                "surface-container-highest": "#dbe4e7",
+                "surface-dim": "#d1dce0",
+                "primary-fixed": "#d2e4fb",
+                "primary-fixed-dim": "#c4d6ed",
+                "on-error": "#fff7f6",
+                "error": "#9f403d",
+                "error-container": "#fe8983"
+            },
+            fontFamily: {
+                "headline": ["Manrope"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+        },
+    },
+}
+</script>
+<style>
+.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+body { font-family: 'Inter', sans-serif; }
+h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+
+{block nav}
+<nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl shadow-[0px_20px_40px_rgba(79,96,115,0.08)]">
+<div class="flex justify-between items-center h-20 px-8 max-w-screen-2xl mx-auto">
+<a href="/" class="text-2xl font-bold tracking-tighter text-slate-800 font-headline">Marko Shop</a>
+<div class="hidden md:flex items-center space-x-10">
+<a class="text-slate-500 font-medium text-sm hover:text-slate-900 transition-colors" href="/">New Arrivals</a>
+<a class="text-slate-500 font-medium text-sm hover:text-slate-900 transition-colors" href="/collections">Collections</a>
+</div>
+<div class="flex items-center space-x-6">
+<div class="flex items-center space-x-4">
+<button id="cart-toggle" class="text-slate-700 relative hover:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span id="cart-badge" class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] w-4 h-4 flex items-center justify-center rounded-full">{$cartCount}</span>
+</button>
+</div>
+</div>
+</div>
+</nav>
+{/block}
+
+{include 'shop::components/minicart'}
+
+{block content}{/block}
+
+{block footer}
+<footer class="bg-slate-100 w-full pt-20 pb-10">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 max-w-screen-2xl mx-auto">
+<div class="space-y-6">
+<div class="text-lg font-bold text-slate-800">Marko Shop</div>
+<p class="text-slate-600 text-xs leading-relaxed uppercase tracking-widest">Crafting timeless essentials for the modern atelier.</p>
+</div>
+<div>
+<h4 class="text-xs font-bold text-slate-800 uppercase tracking-[0.2em] mb-8">Shop</h4>
+<ul class="space-y-4">
+<li><a class="text-slate-500 text-xs uppercase tracking-widest hover:text-slate-800 transition-opacity opacity-80 hover:opacity-100" href="/">New Arrivals</a></li>
+<li><a class="text-slate-500 text-xs uppercase tracking-widest hover:text-slate-800 transition-opacity opacity-80 hover:opacity-100" href="/collections">Collections</a></li>
+</ul>
+</div>
+</div>
+<div class="mt-20 pt-10 border-t border-slate-200/50 max-w-screen-2xl mx-auto px-12">
+<span class="text-slate-500 text-xs uppercase tracking-widest">&copy; 2026 Marko Shop. Designed for Quiet Luxury.</span>
+</div>
+</footer>
+{/block}
+
+<script>
+{block scripts}{/block}
+</script>
+
+<script n:syntax="off">
+// Mini Cart functionality
+const cartDrawer = document.getElementById('cart-drawer');
+const cartOverlay = document.getElementById('cart-overlay');
+const cartToggle = document.getElementById('cart-toggle');
+const cartClose = document.getElementById('cart-close');
+const cartBadge = document.getElementById('cart-badge');
+
+function openCart() {
+    cartDrawer.classList.remove('translate-x-full');
+    cartOverlay.classList.remove('hidden');
+    loadCart();
+}
+
+function closeCart() {
+    cartDrawer.classList.add('translate-x-full');
+    cartOverlay.classList.add('hidden');
+}
+
+if (cartToggle) cartToggle.addEventListener('click', openCart);
+if (cartClose) cartClose.addEventListener('click', closeCart);
+if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
+
+function loadCart() {
+    fetch('/cart')
+        .then(r => r.json())
+        .then(data => renderCart(data));
+}
+
+function renderCart(data) {
+    const list = document.getElementById('cart-items');
+    const subtotalEl = document.getElementById('cart-subtotal');
+    if (cartBadge) cartBadge.textContent = data.count;
+    if (subtotalEl) subtotalEl.textContent = data.formattedSubtotal;
+
+    if (!list) return;
+    if (data.items.length === 0) {
+        list.innerHTML = '<p class="text-center text-on-surface-variant py-12">Your cart is empty</p>';
+        return;
+    }
+
+    list.innerHTML = data.items.map(item => {
+        const key = item.product_id + '-' + item.size + '-' + item.color;
+        const price = '$' + (item.price * item.quantity / 100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return `
+        <div class="flex gap-4 items-center">
+            <div class="w-24 h-32 flex-shrink-0 bg-surface-container-low overflow-hidden rounded-lg">
+                <img class="w-full h-full object-cover" src="${item.image_url}" alt="${item.name}"/>
+            </div>
+            <div class="flex flex-col justify-between h-full py-1 flex-grow">
+                <div>
+                    <h3 class="font-bold text-slate-800 leading-tight">${item.name}</h3>
+                    <p class="text-xs text-on-surface-variant font-medium mt-1">${item.color} / ${item.size}</p>
+                </div>
+                <div class="flex justify-between items-center mt-4">
+                    <div class="flex items-center gap-3 bg-surface-container-low px-2 py-1 rounded-md">
+                        <button onclick="updateCart('${key}', ${item.quantity - 1})" class="text-xs font-bold hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-sm">remove</span>
+                        </button>
+                        <span class="text-xs font-bold w-4 text-center">${item.quantity}</span>
+                        <button onclick="updateCart('${key}', ${item.quantity + 1})" class="text-xs font-bold hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-sm">add</span>
+                        </button>
+                    </div>
+                    <span class="font-bold text-slate-900">${price}</span>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function updateCart(key, quantity) {
+    fetch('/cart/update', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'key=' + encodeURIComponent(key) + '&quantity=' + quantity
+    }).then(r => r.json()).then(data => renderCart(data));
+}
+
+function addToCart(productId, size, color) {
+    fetch('/cart/add', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'product_id=' + productId + '&size=' + encodeURIComponent(size) + '&color=' + encodeURIComponent(color)
+    }).then(r => r.json()).then(data => {
+        renderCart(data);
+        openCart();
+    });
+}
+</script>
+</body>
+</html>

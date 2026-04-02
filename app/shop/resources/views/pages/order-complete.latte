@@ -1,0 +1,98 @@
+{layout 'shop::layout/base'}
+
+{block title}Thank You | Marko Shop{/block}
+
+{block content}
+<main class="pt-32 pb-20 px-6 min-h-screen">
+<div class="max-w-4xl mx-auto">
+<!-- Success Header -->
+<section class="text-center mb-16">
+<div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-secondary-container text-on-secondary-container mb-6">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h1 class="text-5xl font-extrabold tracking-tight text-on-surface mb-4">Thank You</h1>
+<p class="text-on-surface-variant text-lg max-w-md mx-auto">Your order has been received and is currently being processed by our atelier.</p>
+</section>
+
+<!-- Order Details -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Order Identity -->
+<div class="md:col-span-1 p-8 bg-surface-container-lowest rounded-xl shadow-[0px_20px_40px_rgba(79,96,115,0.08)] flex flex-col justify-between">
+<div>
+<span class="block text-xs uppercase tracking-widest text-on-surface-variant font-semibold mb-2">Order Reference</span>
+<h2 class="text-2xl font-bold text-primary mb-1">{$order->reference}</h2>
+<p class="text-sm text-on-surface-variant">Placed on {date('M d, Y', strtotime($order->created_at))}</p>
+</div>
+<div class="mt-12">
+<span class="block text-xs uppercase tracking-widest text-on-surface-variant font-semibold mb-2">Estimated Delivery</span>
+<p class="text-on-surface font-medium">{date('M d', strtotime('+3 days', strtotime($order->created_at)))} - {date('M d', strtotime('+5 days', strtotime($order->created_at)))}</p>
+</div>
+</div>
+
+<!-- Order Items -->
+<div class="md:col-span-2 p-8 bg-surface-container-lowest rounded-xl shadow-[0px_20px_40px_rgba(79,96,115,0.08)]">
+<h3 class="text-xl font-bold mb-6 text-on-surface">Order Summary</h3>
+<div class="space-y-6">
+{foreach $items as $item}
+<div class="flex items-center gap-4">
+<div class="w-20 h-24 bg-surface-container rounded-lg overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" src="https://picsum.photos/seed/order-{$item->product_id}/160/192" alt="{$item->product_name}"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-bold text-on-surface">{$item->product_name}</p>
+<p class="text-sm text-on-surface-variant">{$item->color} / {$item->size}</p>
+</div>
+<p class="font-medium text-on-surface">{$item->formattedLineTotal()}</p>
+</div>
+<p class="text-xs text-on-surface-variant mt-1">Quantity: {$item->quantity}</p>
+</div>
+</div>
+{/foreach}
+
+<div class="pt-6 border-t border-surface-container-high space-y-2">
+<div class="flex justify-between text-sm">
+<span class="text-on-surface-variant">Subtotal</span>
+<span class="text-on-surface">{$order->formattedSubtotal()}</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-on-surface-variant">Shipping</span>
+<span class="text-on-surface">{$order->formattedShippingCost()}</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-on-surface-variant">Tax</span>
+<span class="text-on-surface">{$order->formattedTax()}</span>
+</div>
+<div class="flex justify-between text-lg font-bold pt-2">
+<span class="text-on-surface">Total</span>
+<span class="text-primary">{$order->formattedTotal()}</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Ship To -->
+<div class="md:col-span-1 p-8 bg-surface-container-low rounded-xl">
+<span class="block text-xs uppercase tracking-widest text-on-surface-variant font-semibold mb-4">Ordered By</span>
+<p class="text-on-surface font-medium mb-1">{$order->first_name} {$order->last_name}</p>
+<p class="text-sm text-on-surface-variant leading-relaxed">{$order->email}</p>
+</div>
+
+<!-- Support -->
+<div class="md:col-span-2 p-8 bg-surface-container-low rounded-xl flex items-center justify-between">
+<div>
+<h4 class="font-bold text-on-surface mb-1">Need help with your order?</h4>
+<p class="text-sm text-on-surface-variant">Our concierge is available 24/7 for any inquiries.</p>
+</div>
+<a class="text-primary font-bold text-sm underline hover:text-primary-dim transition-colors" href="#">Contact Support</a>
+</div>
+</div>
+
+<!-- Action Footer -->
+<div class="mt-20 text-center">
+<a class="inline-flex items-center px-10 py-4 bg-primary text-on-primary font-bold rounded-md hover:bg-primary-dim transition-all hover:translate-y-[-2px]" href="/collections">Continue Shopping</a>
+</div>
+</div>
+</main>
+{/block}

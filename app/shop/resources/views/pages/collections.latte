@@ -1,0 +1,34 @@
+{layout 'shop::layout/base'}
+
+{block title}Collections | Marko Shop{/block}
+
+{block content}
+<main class="pt-32 pb-20 px-8 max-w-screen-2xl mx-auto">
+<header class="mb-16">
+<h1 class="text-5xl font-extrabold tracking-tight text-primary mb-4">Curated Collections</h1>
+<p class="text-on-surface-variant max-w-2xl leading-relaxed">Explore a meticulously selected range of seasonal essentials. Each piece in our collection is an architectural study in form and function, designed for the modern atelier lifestyle.</p>
+</header>
+
+<div>
+<div class="flex justify-between items-center mb-10 pb-6 border-b border-surface-container-high">
+<p class="text-sm text-on-surface-variant">Showing <span class="font-bold text-on-surface">{count($products)}</span> results</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-12 gap-x-8">
+{foreach $products as $product}
+<a href="/product/{$product->slug}" class="group cursor-pointer block">
+<div class="relative overflow-hidden rounded-xl bg-surface-container mb-5 aspect-[4/5]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" src="{$product->image_url}" alt="{$product->name}"/>
+<button onclick="event.preventDefault(); event.stopPropagation(); addToCart({$product->id}, '{$product->sizeList()[0] ?? 'One Size'}', '{$product->colorList()[0] ?? 'Default'}')" class="absolute bottom-4 right-4 bg-primary text-on-primary p-3 rounded-full opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<h4 class="text-base font-bold text-on-surface mb-1 group-hover:text-primary transition-colors">{$product->name}</h4>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest mb-2">{$product->category}</p>
+<p class="text-lg font-medium text-primary">{$product->formattedPrice()}</p>
+</a>
+{/foreach}
+</div>
+</div>
+</main>
+{/block}

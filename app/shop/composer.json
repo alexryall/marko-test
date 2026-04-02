@@ -1,8 +1,8 @@
 {
-    "name": "app/hello",
+    "name": "app/shop",
     "autoload": {
         "psr-4": {
-            "App\\Hello\\": "src/"
+            "App\\Shop\\": "src/"
         }
     },
     "extra": {

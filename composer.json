@@ -6,7 +6,13 @@
     "require": {
         "php": "^8.5",
         "marko/env": "*",
-        "marko/framework": "*"
+        "marko/framework": "*",
+        "marko/view": "^0.1.0",
+        "marko/view-latte": "^0.1.0",
+        "marko/database": "^0.1.0",
+        "marko/database-pgsql": "^0.1.0",
+        "marko/session": "^0.1.0",
+        "marko/session-file": "^0.1.0"
     },
     "require-dev": {
         "marko/dev-server": "*",

@@ -1,0 +1,76 @@
+{layout 'shop::layout/base'}
+
+{block content}
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative h-[921px] flex items-center overflow-hidden bg-surface-container">
+<div class="absolute inset-0 z-0">
+<img alt="Editorial fashion photography" class="w-full h-full object-cover grayscale-[20%] contrast-[1.1]" src="https://picsum.photos/seed/hero/1920/1080"/>
+<div class="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent"></div>
+</div>
+<div class="container mx-auto px-12 relative z-10">
+<div class="max-w-2xl">
+<span class="text-primary font-bold tracking-[0.3em] text-xs uppercase mb-6 block">Collection 04 / Atelier</span>
+<h1 class="text-6xl md:text-8xl font-extrabold tracking-tighter text-on-surface leading-[0.9] mb-8">The Quiet <br/> Precision</h1>
+<p class="text-on-surface-variant text-lg max-w-md mb-10 leading-relaxed font-body">Refined silhouettes designed for the modern wardrobe. Sustainable fabrics meet architectural design in our latest seasonal drop.</p>
+<div class="flex items-center space-x-6">
+<a href="/collections" class="bg-primary text-on-primary px-10 py-4 text-sm font-semibold rounded-md shadow-lg hover:translate-y-[-2px] transition-all">Shop The Look</a>
+<a href="/collections" class="text-on-surface font-semibold text-sm group flex items-center">Explore Collections <span class="material-symbols-outlined ml-2 group-hover:translate-x-1 transition-transform">arrow_forward</span></a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- New Arrivals -->
+<section class="py-32 px-8 max-w-screen-2xl mx-auto">
+<div class="flex justify-between items-end mb-16">
+<div>
+<h2 class="text-4xl font-bold tracking-tight text-on-surface mb-2">New Arrivals</h2>
+<p class="text-on-surface-variant">Hand-picked selections from our workshop.</p>
+</div>
+<a class="text-primary border-b border-primary/20 hover:border-primary transition-colors pb-1 text-sm font-semibold" href="/collections">View All Items</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+{foreach $products as $i => $product}
+{if $i === 0}
+<a href="/product/{$product->slug}" class="md:col-span-2 md:row-span-2 group cursor-pointer bg-surface-container-lowest p-6 rounded-xl transition-all block">
+<div class="aspect-[4/5] overflow-hidden rounded-lg mb-6 bg-surface-container-low">
+<img alt="{$product->name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="{$product->image_url}"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<p class="text-xs text-outline-variant uppercase tracking-widest mb-1">{$product->category}</p>
+<h3 class="text-xl font-bold text-on-surface">{$product->name}</h3>
+</div>
+<span class="text-lg font-medium text-primary">{$product->formattedPrice()}</span>
+</div>
+</a>
+{elseif $i < 3}
+<a href="/product/{$product->slug}" class="group cursor-pointer bg-surface-container-lowest p-6 rounded-xl transition-all block">
+<div class="aspect-square overflow-hidden rounded-lg mb-6 bg-surface-container-low">
+<img alt="{$product->name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="{$product->image_url}"/>
+</div>
+<p class="text-xs text-outline-variant uppercase tracking-widest mb-1">{$product->category}</p>
+<h3 class="text-sm font-bold text-on-surface mb-2">{$product->name}</h3>
+<span class="text-sm text-primary">{$product->formattedPrice()}</span>
+</a>
+{else}
+<a href="/product/{$product->slug}" class="md:col-span-2 group cursor-pointer bg-surface-container-lowest p-6 rounded-xl transition-all block">
+<div class="aspect-[16/9] overflow-hidden rounded-lg mb-6 bg-surface-container-low">
+<img alt="{$product->name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="{$product->image_url}"/>
+</div>
+<div class="flex justify-between items-center">
+<div>
+<p class="text-xs text-outline-variant uppercase tracking-widest mb-1">{$product->category}</p>
+<h3 class="text-lg font-bold text-on-surface">{$product->name}</h3>
+</div>
+<span class="text-md font-medium text-primary">{$product->formattedPrice()}</span>
+</div>
+</a>
+{/if}
+{/foreach}
+</div>
+</section>
+
+</main>
+{/block}
