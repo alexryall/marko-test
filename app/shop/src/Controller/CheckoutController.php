@@ -13,6 +13,7 @@ use Marko\Routing\Attributes\Get;
 use Marko\Routing\Attributes\Post;
 use Marko\Routing\Http\Request;
 use Marko\Routing\Http\Response;
+use Marko\Session\Contracts\SessionInterface;
 use Marko\View\ViewInterface;
 
 class CheckoutController
@@ -22,6 +23,7 @@ class CheckoutController
         private CartService $cart,
         private OrderRepository $orders,
         private OrderItemRepository $orderItems,
+        private SessionInterface $session,
     ) {}
 
     #[Get('/checkout')]
@@ -60,7 +62,7 @@ class CheckoutController
         $tax = (int) round($subtotal * 0.085);
         $total = $subtotal + $shippingCost + $tax;
 
-        $reference = '#MS-' . random_int(100000, 999999);
+        $reference = 'MS-' . random_int(100000, 999999);
 
         $order = new Order();
         $order->reference = $reference;
@@ -91,6 +93,11 @@ class CheckoutController
 
         $this->cart->clear();
 
-        return Response::redirect('/order/' . $order->id);
+        // Track which orders belong to this session
+        $sessionOrders = $this->session->get('completed_orders', []);
+        $sessionOrders[] = $order->reference;
+        $this->session->set('completed_orders', $sessionOrders);
+
+        return Response::redirect('/order/' . urlencode($order->reference));
     }
 }

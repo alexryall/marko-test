@@ -9,6 +9,7 @@ use App\Shop\Repository\OrderItemRepository;
 use App\Shop\Service\CartService;
 use Marko\Routing\Attributes\Get;
 use Marko\Routing\Http\Response;
+use Marko\Session\Contracts\SessionInterface;
 use Marko\View\ViewInterface;
 
 class OrderController
@@ -18,14 +19,22 @@ class OrderController
         private OrderRepository $orders,
         private OrderItemRepository $orderItems,
         private CartService $cart,
+        private SessionInterface $session,
     ) {}
 
-    #[Get('/order/{id}')]
-    public function show(int $id): Response
+    #[Get('/order/{reference}')]
+    public function show(string $reference): Response
     {
-        $order = $this->orders->find($id);
+        $reference = urldecode($reference);
+        $order = $this->orders->findByReference($reference);
 
         if ($order === null) {
+            return new Response('Order not found', 404);
+        }
+
+        // Verify the order belongs to the current session
+        $sessionOrders = $this->session->get('completed_orders', []);
+        if (!in_array($order->reference, $sessionOrders, true)) {
             return new Response('Order not found', 404);
         }
 
