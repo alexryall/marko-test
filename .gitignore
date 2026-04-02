@@ -1,0 +1,11 @@
+.DS_Store
+.env
+.marko/
+.claude/projects/
+.claude/ralph-loop.local.md
+.idea/
+.php-cs-fixer.cache
+.phpstan-cache/
+**/.phpunit.cache/
+composer.lock
+vendor/
