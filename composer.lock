@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41f45c1045e117a193b742aacbb6d078",
+    "content-hash": "23878f61fd055afa6dc236f3aec0fd03",
     "packages": [
         {
             "name": "latte/latte",
@@ -619,25 +619,26 @@
             "time": "2026-03-26T16:28:58+00:00"
         },
         {
-            "name": "marko/session-file",
+            "name": "marko/session-database",
             "version": "0.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/marko-php/marko-session-file.git",
-                "reference": "843672d5ab391374803598b2745621192c5e5855"
+                "url": "https://github.com/marko-php/marko-session-database.git",
+                "reference": "8bf2ddc66e98e7728dae3db9b3cf9ffb43108c28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marko-php/marko-session-file/zipball/843672d5ab391374803598b2745621192c5e5855",
-                "reference": "843672d5ab391374803598b2745621192c5e5855",
+                "url": "https://api.github.com/repos/marko-php/marko-session-database/zipball/8bf2ddc66e98e7728dae3db9b3cf9ffb43108c28",
+                "reference": "8bf2ddc66e98e7728dae3db9b3cf9ffb43108c28",
                 "shasum": ""
             },
             "require": {
+                "marko/database": "self.version",
                 "marko/session": "self.version",
                 "php": "^8.5"
             },
             "require-dev": {
-                "marko/testing": "self.version"
+                "pestphp/pest": "^4.0"
             },
             "type": "marko-module",
             "extra": {
@@ -647,16 +648,16 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Marko\\Session\\File\\": "src/"
+                    "Marko\\Session\\Database\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "description": "File-based session driver for Marko Framework",
+            "description": "Database session driver for Marko Framework",
             "support": {
-                "source": "https://github.com/marko-php/marko-session-file/tree/0.1.0"
+                "source": "https://github.com/marko-php/marko-session-database/tree/0.1.0"
             },
             "time": "2026-03-25T17:53:35+00:00"
         },

@@ -38,6 +38,7 @@ echo "Connected to database.\n";
 $pdo->exec('DROP TABLE IF EXISTS order_items CASCADE');
 $pdo->exec('DROP TABLE IF EXISTS orders CASCADE');
 $pdo->exec('DROP TABLE IF EXISTS products CASCADE');
+$pdo->exec('DROP TABLE IF EXISTS sessions CASCADE');
 
 echo "Creating tables...\n";
 
@@ -81,6 +82,14 @@ $pdo->exec('
         quantity INTEGER NOT NULL DEFAULT 1,
         size VARCHAR(50) NOT NULL DEFAULT \'One Size\',
         color VARCHAR(50) NOT NULL DEFAULT \'Default\'
+    )
+');
+
+$pdo->exec('
+    CREATE TABLE sessions (
+        id VARCHAR(255) PRIMARY KEY,
+        payload TEXT NOT NULL,
+        last_activity INTEGER NOT NULL
     )
 ');
 

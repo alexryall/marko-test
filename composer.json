@@ -12,7 +12,7 @@
         "marko/database": "^0.1.0",
         "marko/database-pgsql": "^0.1.0",
         "marko/session": "^0.1.0",
-        "marko/session-file": "^0.1.0"
+        "marko/session-database": "^0.1.0"
     },
     "require-dev": {
         "pestphp/pest": "^4.0"

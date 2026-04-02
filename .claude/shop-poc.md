@@ -14,7 +14,7 @@ Namespace: `App\Shop`
 
 - **Database**: PostgreSQL 17 (installed via Homebrew locally)
 - **Templates**: Latte 3 (via `marko/view-latte`)
-- **Session**: File-based (via `marko/session-file`)
+- **Session**: Database-backed (via `marko/session-database`, PostgreSQL `sessions` table)
 - **Styling**: Tailwind CSS (CDN), Material Symbols icons, Manrope + Inter fonts
 - **Images**: Placeholder images from picsum.photos
 - **Payments**: None (free payment method — PoC only)
@@ -23,7 +23,7 @@ Namespace: `App\Shop`
 
 - `marko/view` + `marko/view-latte` — template rendering
 - `marko/database` + `marko/database-pgsql` — PostgreSQL via Repository/Entity pattern
-- `marko/session` + `marko/session-file` — session-based cart
+- `marko/session` + `marko/session-database` — session-based cart (PostgreSQL)
 
 ### Directory Structure
 
@@ -78,11 +78,12 @@ app/shop/
 
 ### Database Schema
 
-Three tables created by `bin/setup-db.php`:
+Four tables created by `bin/setup-db.php`:
 
 - **products** — id, name, slug, description, price (cents), category, image_url, sizes (JSON string), colors (JSON string)
 - **orders** — id, reference, email, first_name, last_name, shipping_method, shipping_cost, subtotal, tax, total (all money in cents), created_at
 - **order_items** — id, order_id (FK), product_id, product_name, price, quantity, size, color
+- **sessions** — id (PK), payload, last_activity
 
 ### Seed Data (6 products)
 
@@ -112,7 +113,7 @@ The mini cart is a slide-out drawer rendered in `base.latte` with vanilla JS (fe
 ### Configuration Files
 
 - `config/database.php` — PostgreSQL connection (reads from `.env`)
-- `config/session.php` — File driver, `storage/sessions` path
+- `config/session.php` — Database driver (PostgreSQL `sessions` table)
 - `config/view.php` — Latte cache in `storage/views`, auto_refresh enabled
 
 ### Environment Variables (`.env`)
