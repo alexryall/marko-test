@@ -7,5 +7,4 @@
 .php-cs-fixer.cache
 .phpstan-cache/
 **/.phpunit.cache/
-composer.lock
 vendor/
