@@ -6,7 +6,7 @@ Fly.io deployment via GitHub Actions. Pushes to `main` trigger automatic deploys
 
 - **Platform**: Fly.io
 - **Region**: `iad` (US East, Ashburn VA)
-- **App name**: `marko-shop`
+- **App name**: `marko-test`
 - **VM**: shared CPU, 256MB RAM
 - **Database**: Fly Postgres (attached)
 - **Server**: OpenSwoole (boots app once, handles requests from memory)
@@ -32,10 +32,10 @@ Fly.io deployment via GitHub Actions. Pushes to `main` trigger automatic deploys
 fly launch --no-deploy
 
 # Create Postgres database
-fly postgres create --name marko-shop-db
+fly postgres create --name marko-test-db
 
 # Attach database to app (sets DATABASE_URL automatically)
-fly postgres attach marko-shop-db
+fly postgres attach marko-test-db
 
 # Set individual DB env vars (from the attach output)
 fly secrets set DB_HOST=<host> DB_PORT=5432 DB_DATABASE=<db> DB_USERNAME=<user> DB_PASSWORD=<password>
