@@ -39,7 +39,7 @@
 <span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant block mb-4">Select Color: <span id="selected-color">{$colors[0]}</span></span>
 <div class="flex gap-3" id="color-options">
 {foreach $colors as $i => $color}
-<button onclick="selectColor(this, '{$color}')"
+<button data-color="{$color}" onclick="selectColor(this, this.dataset.color)"
     class="w-10 h-10 rounded-full transition-transform hover:scale-110 {if $i === 0}border-2 border-white ring-1 ring-primary selected-color{/if}"
     style="background-color: {if $color === 'Slate Steel'}#4f6073{elseif $color === 'Midnight Black'}#1a1a2e{elseif $color === 'Sandstone'}#d7d2cb{elseif $color === 'Deep Charcoal'}#36454f{elseif $color === 'Indigo'}#3f4b8c{elseif $color === 'Natural'}#f5f0eb{else}#4f6073{/if}"
     title="{$color}"></button>
@@ -57,7 +57,7 @@
 </div>
 <div class="grid grid-cols-4 gap-2" id="size-options">
 {foreach $sizes as $i => $size}
-<button onclick="selectSize(this, '{$size}')"
+<button data-size="{$size}" onclick="selectSize(this, this.dataset.size)"
     class="py-4 text-xs font-medium bg-surface-container-lowest border transition-all {if $i === 0}border-primary text-primary selected-size{else}border-surface-variant text-on-surface-variant hover:border-primary hover:text-primary{/if}">{$size}</button>
 {/foreach}
 </div>
@@ -136,7 +136,7 @@
 <a href="/product/{$item->slug}" class="min-w-[320px] snap-start group cursor-pointer block">
 <div class="aspect-[3/4] rounded-xl overflow-hidden bg-surface-container-low mb-6 relative">
 <img alt="{$item->name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="{$item->image_url}"/>
-<button onclick="event.preventDefault(); event.stopPropagation(); addToCart({$item->id}, '{$item->sizeList()[0] ?? 'One Size'}', '{$item->colorList()[0] ?? 'Default'}')" class="absolute bottom-4 right-4 bg-white/90 backdrop-blur p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<button data-product-id="{$item->id}" data-size="{$item->sizeList()[0] ?? 'One Size'}" data-color="{$item->colorList()[0] ?? 'Default'}" onclick="event.preventDefault(); event.stopPropagation(); addToCart(+this.dataset.productId, this.dataset.size, this.dataset.color)" class="absolute bottom-4 right-4 bg-white/90 backdrop-blur p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
 <span class="material-symbols-outlined text-on-surface">add_shopping_cart</span>
 </button>
 </div>

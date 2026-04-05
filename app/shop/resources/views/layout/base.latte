@@ -166,11 +166,11 @@ function renderCart(data) {
                 </div>
                 <div class="flex justify-between items-center mt-4">
                     <div class="flex items-center gap-3 bg-surface-container-low px-2 py-1 rounded-md">
-                        <button onclick="updateCart('${key}', ${item.quantity - 1})" class="text-xs font-bold hover:text-primary transition-colors">
+                        <button data-cart-key="${key}" data-cart-qty="${item.quantity - 1}" class="cart-qty-btn text-xs font-bold hover:text-primary transition-colors">
                             <span class="material-symbols-outlined text-sm">remove</span>
                         </button>
                         <span class="text-xs font-bold w-4 text-center">${item.quantity}</span>
-                        <button onclick="updateCart('${key}', ${item.quantity + 1})" class="text-xs font-bold hover:text-primary transition-colors">
+                        <button data-cart-key="${key}" data-cart-qty="${item.quantity + 1}" class="cart-qty-btn text-xs font-bold hover:text-primary transition-colors">
                             <span class="material-symbols-outlined text-sm">add</span>
                         </button>
                     </div>
@@ -179,6 +179,12 @@ function renderCart(data) {
             </div>
         </div>`;
     }).join('');
+
+    list.querySelectorAll('.cart-qty-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            updateCart(btn.dataset.cartKey, parseInt(btn.dataset.cartQty, 10));
+        });
+    });
 }
 
 function updateCart(key, quantity) {

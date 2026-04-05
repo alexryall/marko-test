@@ -19,7 +19,7 @@
 <a href="/product/{$product->slug}" class="group cursor-pointer block">
 <div class="relative overflow-hidden rounded-xl bg-surface-container mb-5 aspect-[4/5]">
 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" src="{$product->image_url}" alt="{$product->name}"/>
-<button onclick="event.preventDefault(); event.stopPropagation(); addToCart({$product->id}, '{$product->sizeList()[0] ?? 'One Size'}', '{$product->colorList()[0] ?? 'Default'}')" class="absolute bottom-4 right-4 bg-primary text-on-primary p-3 rounded-full opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+<button data-product-id="{$product->id}" data-size="{$product->sizeList()[0] ?? 'One Size'}" data-color="{$product->colorList()[0] ?? 'Default'}" onclick="event.preventDefault(); event.stopPropagation(); addToCart(+this.dataset.productId, this.dataset.size, this.dataset.color)" class="absolute bottom-4 right-4 bg-primary text-on-primary p-3 rounded-full opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
 <span class="material-symbols-outlined">add</span>
 </button>
 </div>
