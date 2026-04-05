@@ -146,5 +146,24 @@
 </div>
 </div>
 </form>
+
+<div id="checkout-data" data-subtotal="{$subtotal}"></div>
+<script n:syntax="off">
+(function() {
+    var subtotal = parseInt(document.getElementById('checkout-data').dataset.subtotal, 10);
+    var tax = Math.round(subtotal * 0.085);
+    var shippingCosts = { standard: 0, express: 2500 };
+
+    document.querySelectorAll('input[name="shipping_method"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            var shipping = shippingCosts[radio.value] || 0;
+            document.getElementById('shipping-display').textContent = shipping === 0 ? 'Free' : '$' + (shipping / 100).toFixed(2);
+            var total = subtotal + tax + shipping;
+            document.getElementById('total-display').textContent = '$' + (total / 100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        });
+    });
+})();
+</script>
 </main>
 {/block}
+
