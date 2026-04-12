@@ -18,8 +18,8 @@ primary_region = 'iad'
     path = "/"
 
 [[vm]]
-  memory = '2048mb'
-  cpu_kind = 'performance'
+  memory = '256mb'
+  cpu_kind = 'shared'
   cpus = 1
 
 [deploy]
